@@ -176,6 +176,41 @@ export const ProductDetail: React.FC = () => {
                     <Heart className={`w-6 h-6 ${isWishlisted ? 'fill-current' : ''}`} />
                 </button>
             </div>
+
+            {/* Customization Options */}
+            <div className="mt-12 border-t border-stone-200 pt-10">
+                <h3 className="text-lg font-serif text-stone-900 mb-4">Customization Options</h3>
+                <div className="bg-stone-50 p-6 rounded-lg border border-stone-200">
+                    <ul className="space-y-3 text-sm text-stone-600">
+                        {getCustomizationOptions(product.category).map((option, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                                <Check className="w-4 h-4 text-stone-900 mt-0.5 flex-shrink-0" />
+                                <span>{option}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="mt-4 text-xs text-stone-500 italic">
+                        * Contact us for bespoke requirements not listed here.
+                    </p>
+                </div>
+            </div>
+
+            {/* Related Services */}
+            <div className="mt-10">
+                <h3 className="text-lg font-serif text-stone-900 mb-4">Related Services</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {getRelatedServices(product.category).map(service => (
+                        <div 
+                            key={service.id} 
+                            onClick={() => navigate(`/product/${service.id}`)}
+                            className="group cursor-pointer border border-stone-200 p-4 rounded-lg hover:border-stone-900 transition-colors bg-white"
+                        >
+                            <h4 className="font-medium text-stone-900 group-hover:underline">{service.name}</h4>
+                            <p className="text-xs text-stone-500 mt-1 line-clamp-2">{service.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
           </div>
         </div>
 
@@ -297,4 +332,71 @@ function getColorCode(name: string): string {
 function isLightColor(name: string): boolean {
     const light = ['Cream', 'Oatmeal', 'Sand', 'White', 'Pearl Grey', 'Sage', 'Flax', 'Natural/Black'];
     return light.includes(name);
+}
+
+function getCustomizationOptions(category: string): string[] {
+    switch (category) {
+        case 'couch':
+        case 'furniture':
+        case 'headboard':
+            return [
+                "Premium Fabric Selection (Velvet, Linen, Leather)",
+                "Custom Dimensions & Configurations",
+                "Wood Finish Options (Oak, Walnut, Black)",
+                "Cushion Firmness (Soft, Medium, Firm)"
+            ];
+        case 'cushion':
+            return [
+                "Fill Material (Feather Down, Memory Foam, Poly-fill)",
+                "Piping & Trim Options",
+                "Custom Sizes & Shapes",
+                "Removable Covers"
+            ];
+        case 'foam':
+            return [
+                "Cut to Any Shape or Size",
+                "Density Selection (Low, Medium, High, Rebond)",
+                "Lamination (Layering different foams)",
+                "Dacron Wrapping for Plumpness"
+            ];
+        case 'curtains':
+            return [
+                "Heading Styles (Eyelet, Pinch Pleat, Wave)",
+                "Lining Options (Blackout, Thermal, Standard)",
+                "Custom Drop Lengths",
+                "Tie-backs & Accessories"
+            ];
+        case 'service':
+            return [
+                "On-site Consultation",
+                "Fabric Sourcing",
+                "Pickup & Delivery",
+                "Detailed Quotations"
+            ];
+        default:
+            return ["Contact us for custom requirements"];
+    }
+}
+
+function getRelatedServices(category: string) {
+    // If it's a service, show custom furniture options
+    if (category === 'service') {
+        return PRODUCTS.filter(p => p.category === 'furniture').slice(0, 2);
+    }
+    
+    // Otherwise show relevant services
+    const services = PRODUCTS.filter(p => p.category === 'service');
+    
+    // Prioritize specific services based on category
+    if (category === 'foam' || category === 'cushion') {
+        // Show Cut-to-size first
+        return services.sort((a, b) => a.id === 's1' ? -1 : 1).slice(0, 2);
+    }
+    
+    if (category === 'couch' || category === 'furniture') {
+        // Show Re-upholstery first
+        return services.sort((a, b) => a.id === 's2' ? -1 : 1).slice(0, 2);
+    }
+
+    return services.slice(0, 2);
 }
