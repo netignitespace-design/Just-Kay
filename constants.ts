@@ -257,7 +257,7 @@ export const PRODUCTS: Product[] = [
 
 export const NAV_LINKS = [
   { name: 'Home', path: '/' },
-  { name: 'Shop', path: '/shop' },
+  { name: 'Services', path: '/services' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
 ];

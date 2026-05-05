@@ -1,13 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Menu, X, Heart } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { useWishlist } from '../context/WishlistContext';
+import { Menu, X } from 'lucide-react';
 import { NAV_LINKS, LOGO_URL } from '../constants';
 
 export const Navbar: React.FC = () => {
-  const { cartCount, setIsCartOpen } = useCart();
-  const { wishlistCount } = useWishlist();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const location = useLocation();
 
@@ -36,56 +32,10 @@ export const Navbar: React.FC = () => {
                 {link.name.toUpperCase()}
               </Link>
             ))}
-            
-            <Link 
-              to="/wishlist"
-              className="relative p-2 text-stone-500 hover:text-stone-900 transition-colors"
-            >
-              <Heart className="w-6 h-6" />
-              {wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-stone-800 rounded-full">
-                  {wishlistCount}
-                </span>
-              )}
-            </Link>
-
-            <button 
-              onClick={() => setIsCartOpen(true)}
-              className="relative p-2 text-stone-500 hover:text-stone-900 transition-colors"
-            >
-              <ShoppingBag className="w-6 h-6" />
-              {cartCount > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-stone-800 rounded-full">
-                  {cartCount}
-                </span>
-              )}
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
-             <Link 
-              to="/wishlist"
-              className="relative p-2 text-stone-500 hover:text-stone-900 transition-colors"
-            >
-              <Heart className="w-6 h-6" />
-              {wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-stone-800 rounded-full">
-                  {wishlistCount}
-                </span>
-              )}
-            </Link>
-             <button 
-              onClick={() => setIsCartOpen(true)}
-              className="relative p-2 text-stone-500 hover:text-stone-900 transition-colors"
-            >
-              <ShoppingBag className="w-6 h-6" />
-              {cartCount > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-stone-800 rounded-full">
-                  {cartCount}
-                </span>
-              )}
-            </button>
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-stone-500 hover:text-stone-900"

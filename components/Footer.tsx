@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Twitter, MapPin, Mail, Phone } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -19,10 +20,10 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="font-serif text-lg text-stone-100 mb-4">Explore</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#/shop" className="hover:text-stone-100 transition-colors">Our Collection</a></li>
-              <li><a href="#/about" className="hover:text-stone-100 transition-colors">Our Story</a></li>
-              <li><a href="#/contact" className="hover:text-stone-100 transition-colors">Contact Us</a></li>
-              <li><a href="#" className="hover:text-stone-100 transition-colors">Shipping & Returns</a></li>
+              <li><Link to="/services" className="hover:text-stone-100 transition-colors">Our Services</Link></li>
+              <li><Link to="/about" className="hover:text-stone-100 transition-colors">Our Story</Link></li>
+              <li><Link to="/contact" className="hover:text-stone-100 transition-colors">Contact Us</Link></li>
+              <li><a href="#" className="hover:text-stone-100 transition-colors">FAQ</a></li>
             </ul>
           </div>
 
